@@ -17,8 +17,8 @@ public class WeatherController {
     private final WeatherService weatherService;
 
     @GetMapping("/")
-    public String showForm() {
-        return "weather";
+    public Mono<String> showForm(Model model) {
+        return showWeatherForm("Hamburg, Germany", model);
     }
 
     @GetMapping("favicon.ico")
@@ -28,6 +28,7 @@ public class WeatherController {
 
     @PostMapping("/weather")
     public Mono<String> showWeatherForm(@RequestParam(required = false) String location, Model model) {
+        model.addAttribute("location", location);
         if (location == null || location.trim().isEmpty()) {
             model.addAttribute("weather", null);
             model.addAttribute("error", "Please enter a location");

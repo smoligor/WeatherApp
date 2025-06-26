@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ENG">
 <head>
     <meta charset="UTF-8">
     <title>Weather</title>
@@ -55,7 +55,9 @@
 <div class="container">
     <h2>Weather App</h2>
     <form th:action="@{/weather}" method="post">
-        <input type="text" name="location" placeholder="Enter a location" required />
+        <label>
+            <input type="text" name="location" placeholder="Enter a location" required th:value="${location ?: 'Hamburg, Germany'}"/>
+        </label>
         <button type="submit">Get Weather</button>
     </form>
 
