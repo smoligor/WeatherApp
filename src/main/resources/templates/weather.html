@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        h2 {
+            color: #4682b4;
+        }
+        form {
+            margin-bottom: 1rem;
+            display: flex;
+        }
+        input[type="text"] {
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            flex-grow: 1;
+        }
+        button {
+            padding: 0.5rem 1rem;
+            background-color: #4682b4;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 0.5rem;
+        }
+        .weather-info {
+            margin-top: 1rem;
+        }
+        .error {
+            color: #ff6347;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Weather App</h2>
+    <form th:action="@{/weather}" method="post">
+        <input type="text" name="location" placeholder="Enter a location" required />
+        <button type="submit">Get Weather</button>
+    </form>
+
+    <div th:if="${error}" class="error">
+        <p th:text="${error}"></p>
+    </div>
+
+    <div th:if="${weather}" class="weather-info">
+        <h3 th:text="${weather.location}"></h3>
+        <ul>
+            <li>Temperature: <span th:text="${weather.temperature}"></span> °C</li>
+            <li>Condition: <span th:text="${weather.condition}"></span></li>
+            <li>Wind speed: <span th:text="${weather.windSpeed}"></span> m/s</li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
