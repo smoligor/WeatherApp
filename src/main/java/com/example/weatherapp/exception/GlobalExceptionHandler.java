@@ -3,6 +3,7 @@ package com.example.weatherapp.exception;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.reactive.function.client.WebClientRequestException;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -19,6 +20,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(WebClientResponseException.class)
     public ModelAndView handleWebClientResponseException(WebClientResponseException ex) {
         log.error("Error from external API: {} {}", ex.getStatusCode(), ex.getResponseBodyAsString(), ex);
+        return createErrorModelAndView("Error communicating with the weather service. Please try again later.");
+    }
+
+    @ExceptionHandler(WebClientRequestException.class)
+    public ModelAndView handleWebClientRequestException(WebClientRequestException ex) {
+        log.error("Network error when calling external API", ex);
         return createErrorModelAndView("Error communicating with the weather service. Please try again later.");
     }
 
